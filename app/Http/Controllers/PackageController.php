@@ -15,7 +15,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::all();
+        $packages = Package::paginate(10);
         $types = Type::all();
         return view('laundry.index', compact('types', 'packages'));
     }
@@ -44,7 +44,6 @@ class PackageController extends Controller
             'nama_paket' => 'required',
             'type_id' => 'required',
             'harga' => 'required|numeric',
-            'durasi' => 'required|numeric'
         ]);
 
         Package::create($request->all());
@@ -86,21 +85,21 @@ class PackageController extends Controller
      * @param  \App\Package  $Package
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Package $package)
-    {
+    public function update(Request $request, $id)
+    {   
+        $package = Package::find($id);
+
         $request->validate([
             'nama_paket' => 'required',
             'type_id' => 'required',
             'harga' => 'required|numeric',
-            'durasi' => 'required|numeric'
         ]);
 
-        Package::where('id', $package->id)
+        Package::where('id', $id)
             ->update([
                 'nama_paket' => $request->nama_paket,
                 'type_id' => $request->type_id,
-                'harga' => $request->harga,
-                'durasi' => $request->durasi
+                'harga' => $request->harga
             ]);
 
         return redirect('/laundry')->with('status', 'Data berhasil diperbarui');

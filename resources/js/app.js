@@ -29,4 +29,20 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    data: {
+        pcs : '',
+        harga : '',
+        cost: ''
+    },
+    methods: {
+        cetak: function(){
+            window.print();
+        }
+    },
+    computed: {
+        count: function(){
+            cost = this.harga * this.pcs;
+            return cost;
+        }
+    }
 });

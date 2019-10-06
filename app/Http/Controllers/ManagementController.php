@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Management;
+use App\Transaction;
 use Illuminate\Http\Request;
 
 class ManagementController extends Controller
@@ -14,7 +15,7 @@ class ManagementController extends Controller
      */
     public function index()
     {
-        $managements = Management::all();
+        $managements = Management::paginate(10);
         return view('management.index', [
             'managements' => $managements
         ]);
@@ -43,6 +44,13 @@ class ManagementController extends Controller
             'jumlah' => 'required|numeric',
             'nominal' => 'required|numeric'
         ]);
+
+        Transaction::create([
+            'transaksi' => 'Transaksi laundry - '.$request->nama,
+            'pemasukan' => 0,
+            'pengeluaran' => $request->nominal
+        ]);
+
         Management::create($request->all());
         return redirect('/management')->with('status', 'Data berhasil ditambahkan');
     }

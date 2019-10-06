@@ -15,6 +15,6 @@ class Package extends Model
 
     public function laundry()
     {
-        return $this->hasMany('App\Laundry', 'id');
+        return $this->hasMany('App\Laundry', 'package_id');
     }
 }

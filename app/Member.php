@@ -10,6 +10,6 @@ class Member extends Model
 
     public function laundry()
     {
-        return $this->hasMany('App\Laundry', 'id');
+        return $this->hasMany('App\Laundry', 'member_id');
     }
 }

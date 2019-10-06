@@ -16,10 +16,12 @@ class CreateTransactionTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('transaksi');
+            $table->unsignedBigInteger('laundry_id')->nullable();
             $table->integer('pemasukan')->nullable();
             $table->integer('pengeluaran')->nullable();
             $table->timestamps();
 
+            $table->foreign('laundry_id')->references('id')->on('launders')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

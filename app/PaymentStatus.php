@@ -11,6 +11,6 @@ class PaymentStatus extends Model
 
     public function laundry()
     {
-        return $this->hasMany('App\Laundry', 'id');
+        return $this->hasMany('App\Laundry', 'payment_status_id');
     }
 }

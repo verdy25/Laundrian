@@ -18,7 +18,6 @@ class CreateLaundryPackageTable extends Migration
             $table->string('nama_paket');
             $table->unsignedBigInteger('type_id');
             $table->integer('harga');
-            $table->integer('durasi');
             $table->timestamps();
 
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade')->onUpdate('cascade');

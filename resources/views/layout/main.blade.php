@@ -10,16 +10,17 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/js/script.js')}}">
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/app.css')}}">
 </head>
 
 <body id="page-top">
     <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-            <div class="container-fluid d-flex flex-column p-0">
+            <div class="container-fluid mt-3 d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
                     href="{{url('/')}}">
                     <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>Brand</span></div>
+                    <div class="sidebar-brand-text mx-3"><span>Laundry kuy</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
@@ -59,26 +60,9 @@
         <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
         <script src="{{ asset('assets/js/script.min.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.1/jspdf.debug.js"
+            integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous">
+        </script>
 </body>
-<script>
-    $(document).ready(function(){
-        update_amounts();
-        $('.package_id', '.pcs').change(function() {
-        update_amounts();
-        });
-    });
-
-
-function update_amounts()
-{
-var jumlah = 0;
-$('#laundrian').each(function() {
-    var harga = $(this).find('option:selected').val('harga');
-    var pcs = $(this).find('.pcs').val();
-    jumlah = (pcs*harga)
-    $(this).find('.cost').text(''+jumlah);
-});
-}
-</script>
-
 </html>
