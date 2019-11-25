@@ -46,9 +46,9 @@ class ManagementController extends Controller
         ]);
 
         Transaction::create([
-            'transaksi' => 'Transaksi laundry - '.$request->nama,
+            'transaksi' => 'Pengeluaran - '.$request->nama,
             'pemasukan' => 0,
-            'pengeluaran' => $request->nominal
+            'pengeluaran' => $request->nominal * $request->jumlah
         ]);
 
         Management::create($request->all());

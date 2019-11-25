@@ -1,8 +1,5 @@
-@extends('layout.main')
-
-@section('title', 'Edit Members Laundry')
-
-@section('container')
+@extends('layouts.master')
+@section('content')
 <div class="d-flex flex-column" id="content-wrapper">
     <div id="content">
         
@@ -14,7 +11,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="nama_paket">ID</label>
-                        <input type="text" class="form-control" value="{{$package->id}}">
+                        <input type="text" class="form-control" value="{{$package->id}}" disabled>
                         @error('nama_paket')
                         <div class="invalid-feedback">
                             {{$message}}
@@ -61,10 +58,5 @@
             </div>
         </div>
     </div>
-    <footer class="bg-white sticky-footer">
-        <div class="container my-auto">
-            <div class="text-center my-auto copyright"><span>Copyright © Brand 2019</span></div>
-        </div>
-    </footer>
-</div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    </div>
 @endsection

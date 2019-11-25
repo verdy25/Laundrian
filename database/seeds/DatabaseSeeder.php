@@ -24,15 +24,6 @@ class DatabaseSeeder extends Seeder
         DB::table('members')->insert([
             'nama' => 'verdy',
             'hp' => '0895601673628'
-        ]);
-
-        DB::table('payment_status')->insert([
-            'status' => 'lunas'
-        ]);
-
-        DB::table('payment_status')->insert([
-            'status' => 'belum lunas'
-        ]);
-        
+        ]);        
     }
 }

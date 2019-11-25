@@ -16,15 +16,14 @@ class CreateLaunderTable extends Migration
         Schema::create('launders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('member_id');
-            $table->unsignedBigInteger('package_price');
+            $table->unsignedBigInteger('package_id');
             $table->integer('pcs');
             $table->integer('cost');
-            $table->unsignedBigInteger('payment_status_id');
             $table->date('created_at');
             $table->date('updated_at');
 
             $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('payment_status_id')->references('id')->on('payment_status')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('package_id')->references('id')->on('packages');
         });
     }
 

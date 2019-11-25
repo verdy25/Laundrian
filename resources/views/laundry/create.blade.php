@@ -1,11 +1,7 @@
-@extends('layout.main')
-
-@section('title', 'Tambah paket laundry')
-
-@section('container')
+@extends('layouts.master')
+@section('content')
 <div class="d-flex flex-column" id="content-wrapper">
     <div id="content">
-        
         <div class="container-fluid mt-3">
             <div class="col-lg-10 col-xl-10 col-md-10">
                 <h3 class="text-dark mb-4">Paket Laundry</h3>
@@ -46,10 +42,5 @@
             </div>
         </div>
     </div>
-    <footer class="bg-white sticky-footer">
-        <div class="container my-auto">
-            <div class="text-center my-auto copyright"><span>Copyright © Brand 2019</span></div>
-        </div>
-    </footer>
-</div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    </div>
 @endsection

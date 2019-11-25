@@ -1,14 +1,10 @@
-@extends('layout.main')
-
-@section('title', 'Edit Manajemens Laundry')
-
-@section('container')
+@extends('layouts.master')
+@section('content')
 <div class="d-flex flex-column" id="content-wrapper">
     <div id="content">
-        
         <div class="container-fluid mt-3">
             <div class="col-lg-10 col-xl-10 col-md-10">
-                <h3 class="text-dark mb-4">Manajemens X'Laundry</h3>
+                <h3 class="text-dark mb-4">Manajemens Laundry</h3>
                 <form method="POST" action="/management/{{$management->id}}">
                     @method('put')
                     @csrf
@@ -33,7 +29,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="nominal">nominal</label>
+                        <label for="nominal">Harga satuan</label>
                         <input type="text" class="form-control @error('nominal') is-invalid @enderror" id="nominal"
                             placeholder="Masukkan nominal" name="nominal" value="{{$management->nominal}}">
                         @error('nominal')
@@ -47,10 +43,5 @@
             </div>
         </div>
     </div>
-    <footer class="bg-white sticky-footer">
-        <div class="container my-auto">
-            <div class="text-center my-auto copyright"><span>Copyright © Brand 2019</span></div>
-        </div>
-    </footer>
-</div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
-@endsection 
+</div>
+@endsection

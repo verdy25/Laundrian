@@ -9,9 +9,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $transaksi = Transaction::paginate(10);
+        $transaksi = Transaction::all();
         $transaksi_bln = Transaction::whereMonth('created_at', Carbon::now()->month)->count();
-        // $pemasukan = Transaction::where('payment_status_id', 1)->sum('pemasukan');
         $pemasukan = Transaction::whereMonth('created_at', Carbon::now()->month)->sum('pemasukan');
         $pengeluaran = Transaction::whereMonth('created_at', Carbon::now()->month)->sum('pengeluaran');
         $pendapatan = $pemasukan - $pengeluaran;

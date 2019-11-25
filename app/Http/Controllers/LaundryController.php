@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Laundry;
 use App\Member;
 use App\Package;
-use App\PaymentStatus;
 use App\Transaction;
 use Illuminate\Http\Request;
 
@@ -21,8 +20,7 @@ class LaundryController extends Controller
         $laundries = Laundry::paginate(10);
         $members = Member::all();
         $packages = Package::all();
-        $payment_status = PaymentStatus::all();
-        return view('custlaundry.index', compact('laundries', 'members', 'packages', 'payment_status'));
+        return view('custlaundry.index', compact('laundries', 'members', 'packages'));
     }
 
     /**
@@ -34,8 +32,7 @@ class LaundryController extends Controller
     {
         $members = Member::all();
         $packages = Package::all();
-        $payment_status = PaymentStatus::all();
-        return view('custlaundry.create', compact('members', 'packages', 'payment_status'));
+        return view('custlaundry.create', compact('members', 'packages'));
     }
 
     /**
@@ -48,24 +45,24 @@ class LaundryController extends Controller
     {
         $request->validate([
             'member_id' => 'required',
-            'package_price' => 'required',
-            'pcs' => 'required',
-            'cost' => 'required',
-            'payment_status_id' => 'required',
-            'laundry_id' => 'nullable'
+            'package_id' => 'required',
+            'pcs' => 'required'
         ]);
+
+        $package = Package::find($request->package_id);
+        $cost = $request->pcs * $package->harga;
+        $member = Member::find($request->member_id);
 
         Laundry::create([
             'member_id' => $request->member_id,
-            'package_price' => $request->package_price,
+            'package_id' => $request->package_id,
             'pcs' => $request->pcs,
-            'cost' => $request->cost,
-            'payment_status_id' => $request->payment_status_id
+            'cost' => $cost
         ]);
 
         Transaction::create([
-            'transaksi' => 'Transaksi laundry - '.$request->member_id,
-            'pemasukan' => $request->cost,
+            'transaksi' => 'Transaksi laundry '.$member->nama,
+            'pemasukan' => $cost,
             'pengeluaran' => 0,
             'laundry_id' => $request->id
         ]);
@@ -93,10 +90,9 @@ class LaundryController extends Controller
     public function edit($id)
     {
         $laundry = Laundry::findOrFail($id);
-        $members = Member::all();
+        $members = Member::findOrFail($laundry->members->id);
         $packages = Package::all();
-        $payment_status = PaymentStatus::all();
-        return view('custlaundry.edit', compact('laundry', 'members', 'packages', 'payment_status'));
+        return view('custlaundry.edit', compact('laundry', 'members', 'packages'));
     }
 
     /**
@@ -113,8 +109,7 @@ class LaundryController extends Controller
             'member_id' => 'required',
             'package_price' => 'required',
             'pcs' => 'required',
-            'cost' => 'required',
-            'payment_status_id' => 'required'
+            'cost' => 'required'
         ]);
 
         Laundry::where('id', $id)
@@ -122,8 +117,7 @@ class LaundryController extends Controller
                 'member_id' => $request->member_id,
                 'package_price' => $request->package_price,
                 'pcs' => $request->pcs,
-                'cost' => $request->cost,
-                'payment_status_id' => $request->payment_status_id
+                'cost' => $request->cost
             ]);
         return redirect('/laundriin')->with('status', 'Data berhasil diperbarui');
     }

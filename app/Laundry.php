@@ -19,11 +19,6 @@ class Laundry extends Model
         return $this->belongsTo('App\Package', 'package_id');
     }
 
-    public function status()
-    {
-        return $this->belongsTo('App\PaymentStatus', 'payment_status_id');
-    }
-
     public function transaksi()
     {
         return $this->belongsTo('App\Transaction', 'laundry_id');
