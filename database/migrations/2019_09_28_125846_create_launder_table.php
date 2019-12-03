@@ -19,8 +19,7 @@ class CreateLaunderTable extends Migration
             $table->unsignedBigInteger('package_id');
             $table->integer('pcs');
             $table->integer('cost');
-            $table->date('created_at');
-            $table->date('updated_at');
+            $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('package_id')->references('id')->on('packages');

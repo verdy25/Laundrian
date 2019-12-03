@@ -4,7 +4,7 @@
     <div id="content">
         <div class="container-fluid mt-3">
             <h3 class="text-dark mb-4">Nge-Laundry</h3>
-            <a href="{{url('laundriin/create')}}" class="btn btn-primary mb-3">Tambah laundry</a>
+            <a href="{{route('laundriin.create')}}" class="btn btn-primary mb-3">Tambah laundry</a>
             @if (session('status'))
             <div class="alert alert-success">
                 {{session('status')}}
@@ -22,20 +22,18 @@
                                     <th>Tanggal</th>
                                     <th>Member</th>
                                     <th>Tagihan</th>
-                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($laundries as $laundry)
                                 <tr>
-                                    <td>{{$laundry->created_at->format('d-m-Y')}}</td>
+                                    <td>{{$laundry->created_at->format('d F Y')}}</td>
                                     <td>{{$laundry->members->nama}}</td>
                                     <td>{{$laundry->cost}}</td>
-                                    <td>{{$laundry->status->status}}</td>
                                     <td>
-                                        <a href="/laundriin/{{$laundry->id}}/edit" class="btn btn-primary">Edit</a>
-                                        <form class="d-inline" method="POST" action="/laundriin/{{$laundry->id}}">
+                                        <a href="{{route('laundriin.edit', $laundry->id)}}" class="btn btn-primary">Edit</a>
+                                        <form class="d-inline" method="POST" action="{{route('laundriin.destroy', $laundry->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button class="btn btn-danger" type="submit">hapus</button>

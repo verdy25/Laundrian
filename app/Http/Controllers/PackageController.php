@@ -15,7 +15,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::paginate(10);
+        $packages = Package::all();
         $types = Type::all();
         return view('laundry.index', compact('types', 'packages'));
     }
@@ -47,7 +47,7 @@ class PackageController extends Controller
         ]);
 
         Package::create($request->all());
-        return redirect('/laundry')->with('status', 'Data berhasil ditambahkan');
+        return redirect()->route('laundry.index')->with('status', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -102,7 +102,7 @@ class PackageController extends Controller
                 'harga' => $request->harga
             ]);
 
-        return redirect('/laundry')->with('status', 'Data berhasil diperbarui');
+        return redirect()->route('laundry.index')->with('status', 'Data berhasil diperbarui');
     }
 
     /**
@@ -114,6 +114,6 @@ class PackageController extends Controller
     public function destroy($id)
     {
         Package::destroy($id);
-        return redirect('/laundry')->with('status', 'Data telah dihapus');
+        return redirect()->route('laundry.index')->with('status', 'Data telah dihapus');
     }
 }

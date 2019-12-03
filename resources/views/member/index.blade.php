@@ -4,7 +4,7 @@
     <div id="content">
         <div class="container-fluid mt-3">
             <h3 class="text-dark mb-4">Members Laundry</h3>
-            <a href="{{url('member/create')}}" class="btn btn-primary mb-3">Tambah data member</a>
+            <a href="{{route('member.create')}}" class="btn btn-primary mb-3">Tambah data member</a>
             @if (session('status'))
             <div class="alert alert-success">
                 {{session('status')}}
@@ -33,9 +33,9 @@
                                     <td>{{$member->nama}}</td>
                                     <td>{{$member->hp}}</td>
                                     <td>
-                                        <a href="/member/{{$member->id}}" class="btn btn-success">Detail</a>
-                                        <a href="/member/{{$member->id}}/edit" class="btn btn-primary">Edit</a>
-                                        <form class="d-inline" method="POST" action="/member/{{$member->id}}">
+                                        <a href="{{route('member.show', $member->id)}}" class="btn btn-success">Detail</a>
+                                        <a href="{{route('member.edit', $member->id)}}" class="btn btn-primary">Edit</a>
+                                        <form class="d-inline" method="POST" action="{{route('member.destroy', $member->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button class="btn btn-danger" type="submit">hapus</button>

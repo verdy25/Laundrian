@@ -5,7 +5,7 @@
         <div class="container-fluid mt-3" id="app">
             <div class="col-lg-10 col-xl-10 col-md-10">
                 <h3 class="text-dark mb-4">Ngelaundry</h3>
-                <form method="POST" action="/laundriin">
+                <form method="POST" action="{{route('laundriin.store')}}">
                     @csrf
                     <div class="form-group">
                         <label for="member_id">Id member</label>

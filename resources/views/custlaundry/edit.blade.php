@@ -6,7 +6,7 @@
         <div class="container-fluid mt-3" id="app">
             <div class="col-lg-10 col-xl-10 col-md-10">
                 <h3 class="text-dark mb-4">Paket Laundry</h3>
-                <form method="POST" action="/laundriin/{{$laundry->id}}">
+                <form method="POST" action="{{route('laundriin.update', $laundry->id)}}">
                     @method('put')
                     @csrf
                     <div class="form-group">
@@ -20,12 +20,12 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="package_price">Laundry</label>
-                        <select name="package_price" id="package_price" v-model="harga"
-                            class="form-control @error('package_price') is-invalid @enderror">
-                            <option selected value="{{old('package_price')}}">{{old('package_price')}}</option>
+                        <label for="package_id">Laundry</label>
+                        <select name="package_id" id="package_id"
+                            class="form-control @error('package_id') is-invalid @enderror">
+                            <option selected value="{{$laundry->package_id}}">{{$laundry->packages->nama_paket}}</option>
                             @foreach ($packages as $package)
-                            <option id="package_price" value="{{$package->harga}}">
+                            <option id="package_price" value="{{$package->id}}">
                                 {{$package->nama_paket}} ({{$package->types->type}})
                             </option>
                             @endforeach
@@ -36,16 +36,6 @@
                         <input type="number" class="form-control @error('pcs') is-invalid @enderror" id="pcs" name="pcs"
                             value="{{$laundry->pcs}}">
                         @error('pcs')
-                        <div class="invalid-feedback">
-                            {{$message}}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="cost">Harga</label>
-                        <input type="text" class="form-control @error('cost') is-invalid @enderror" id="cost"
-                            name="cost" v-model="count" aria-disabled="true">
-                        @error('cost')
                         <div class="invalid-feedback">
                             {{$message}}
                         </div>

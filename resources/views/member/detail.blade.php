@@ -4,7 +4,7 @@
     <div id="content">
         <div class="container-fluid mt-3" id="app">
             <div class="col-lg-10 col-xl-10 col-md-10">
-                <form method="GET" action="/member/{{$member->id}}">
+                <form method="GET" action="{{route('member.show', $member->id)}}">
                     <table class="table">
                         <tr>
                             <td><b>Member ID: </b></td>

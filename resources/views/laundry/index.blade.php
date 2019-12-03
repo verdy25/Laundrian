@@ -4,7 +4,7 @@
     <div id="content">
         <div class="container-fluid mt-3">
             <h3 class="text-dark mb-4">Paket Laundry</h3>
-            <a href="{{url('laundry/create')}}" class="btn btn-primary mb-3">Tambah data paket laundry</a>
+            <a href="{{route('laundry.create')}}" class="btn btn-primary mb-3">Tambah data paket laundry</a>
             @if (session('status'))
             <div class="alert alert-success">
                 {{session('status')}}
@@ -32,8 +32,8 @@
                                     <td>{{$package->types->type}}</td>
                                     <td>{{$package->harga}}</td>
                                     <td>
-                                        <a href="/laundry/{{$package->id}}/edit" class="btn btn-primary">Edit</a>
-                                        <form class="d-inline" method="POST" action="/laundry/{{$package->id}}">
+                                        <a href="{{route('laundry.edit', $package->id)}}" class="btn btn-primary">Edit</a>
+                                        <form class="d-inline" method="POST" action="{{route('laundry.destroy', $package->id)}}">
                                             @method('DELETE')
                                             @csrf
                                             <button class="btn btn-danger" type="submit">hapus</button>

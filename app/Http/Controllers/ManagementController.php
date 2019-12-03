@@ -15,7 +15,7 @@ class ManagementController extends Controller
      */
     public function index()
     {
-        $managements = Management::paginate(10);
+        $managements = Management::all();
         return view('management.index', [
             'managements' => $managements
         ]);
@@ -45,14 +45,21 @@ class ManagementController extends Controller
             'nominal' => 'required|numeric'
         ]);
 
+        // Management::create($request->all());
+        $management = new Management();
+        $management->nama = $request->nama;
+        $management->jumlah = $request->jumlah;
+        $management->nominal = $request->nominal;
+        $management->save();
+
+        $id = $management->id;
+
         Transaction::create([
-            'transaksi' => 'Pengeluaran - '.$request->nama,
+            'transaksi' => 'K' . $id,
             'pemasukan' => 0,
             'pengeluaran' => $request->nominal * $request->jumlah
         ]);
-
-        Management::create($request->all());
-        return redirect('/management')->with('status', 'Data berhasil ditambahkan');
+        return redirect()->route('management.index')->with('status', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -101,7 +108,12 @@ class ManagementController extends Controller
                 'jumlah' => $request->jumlah,
                 'nominal' => $request->nominal
             ]);
-        return redirect('/management')->with('status', 'Data berhasil diperbarui');
+
+        Transaction::where('transaksi', 'K' . $management->id)->update([
+            'pengeluaran' => $request->jumlah * $request->nominal,
+        ]);
+
+        return redirect()->route('management.index')->with('status', 'Data berhasil diperbarui');
     }
 
     /**
@@ -113,6 +125,7 @@ class ManagementController extends Controller
     public function destroy($id)
     {
         Management::destroy($id);
-        return redirect('/management')->with('status', 'Data telah dihapus');
+        Transaction::where('transaksi', 'K' . $id)->delete();
+        return redirect()->route('management.index')->with('status', 'Data telah dihapus');
     }
 }

@@ -5,7 +5,7 @@
         <div class="container-fluid mt-3">
             <div class="col-lg-10 col-xl-10 col-md-10">
                 <h3 class="text-dark mb-4">Members Laundry</h3>
-                <form method="POST" action="/member">
+                <form method="POST" action="{{route('member.store')}}">
                     @csrf
                     <div class="form-group">
                         <label for="nama">Nama</label>

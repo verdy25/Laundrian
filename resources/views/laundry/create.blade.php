@@ -5,7 +5,7 @@
         <div class="container-fluid mt-3">
             <div class="col-lg-10 col-xl-10 col-md-10">
                 <h3 class="text-dark mb-4">Paket Laundry</h3>
-                <form method="POST" action="/laundry">
+                <form method="POST" action="{{route('laundry.store')}}">
                     @csrf
                     <div class="form-group">
                         <label for="nama_paket">Nama Paket</label>

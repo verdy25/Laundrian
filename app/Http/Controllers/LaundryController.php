@@ -17,7 +17,7 @@ class LaundryController extends Controller
      */
     public function index()
     {
-        $laundries = Laundry::paginate(10);
+        $laundries = Laundry::all();
         $members = Member::all();
         $packages = Package::all();
         return view('custlaundry.index', compact('laundries', 'members', 'packages'));
@@ -51,23 +51,23 @@ class LaundryController extends Controller
 
         $package = Package::find($request->package_id);
         $cost = $request->pcs * $package->harga;
-        $member = Member::find($request->member_id);
 
-        Laundry::create([
-            'member_id' => $request->member_id,
-            'package_id' => $request->package_id,
-            'pcs' => $request->pcs,
-            'cost' => $cost
-        ]);
+        $laundry = new Laundry();
+        $laundry->member_id = $request->member_id;
+        $laundry->package_id = $request->package_id;
+        $laundry->pcs = $request->pcs;
+        $laundry->cost = $cost;
+        $laundry->save();
+
+        $id = $laundry->id;
 
         Transaction::create([
-            'transaksi' => 'Transaksi laundry '.$member->nama,
+            'transaksi' => 'M' . $id,
             'pemasukan' => $cost,
-            'pengeluaran' => 0,
-            'laundry_id' => $request->id
+            'pengeluaran' => 0
         ]);
 
-        return redirect('/laundriin')->with('status', 'data berhasil ditambahkan');
+        return redirect()->route('laundriin.index')->with('status', 'data berhasil ditambahkan');
     }
 
     /**
@@ -107,19 +107,26 @@ class LaundryController extends Controller
         // $laundry = Laundry::find($id);
         $request->validate([
             'member_id' => 'required',
-            'package_price' => 'required',
-            'pcs' => 'required',
-            'cost' => 'required'
+            'package_id' => 'required',
+            'pcs' => 'required'
         ]);
+
+        $package = Package::find($request->package_id);
+        $cost = $request->pcs * $package->harga;
 
         Laundry::where('id', $id)
             ->update([
                 'member_id' => $request->member_id,
-                'package_price' => $request->package_price,
+                'package_id' => $request->package_id,
                 'pcs' => $request->pcs,
-                'cost' => $request->cost
+                'cost' => $cost
             ]);
-        return redirect('/laundriin')->with('status', 'Data berhasil diperbarui');
+
+        Transaction::where('transaksi', 'M' . $id)->update([
+            'pemasukan' => $cost,
+        ]);
+
+        return redirect()->route('laundriin.index')->with('status', 'Data berhasil diperbarui');
     }
 
     /**
@@ -131,6 +138,7 @@ class LaundryController extends Controller
     public function destroy($id)
     {
         Laundry::destroy($id);
-        return redirect('/laundriin')->with('status', 'Data telah dihapus');
+        Transaction::where('transaksi', 'M'.$id)->delete();
+        return redirect()->route('laundriin.index')->with('status', 'Data telah dihapus');
     }
 }

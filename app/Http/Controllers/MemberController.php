@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class MemberController extends Controller
 {
@@ -14,7 +15,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $members = Member::paginate(10);
+        $members = Member::all();
         return view('member.index', compact('members'));
     }
 
@@ -41,7 +42,7 @@ class MemberController extends Controller
             'hp' => 'required|between:11,13|unique:members|regex:/^([0-9\s\-\+\(\)]*)$/'
         ]);
         Member::create($request->all());
-        return redirect('/member')->with('status', 'Member berhasil ditambahkan');
+        return redirect()->route('member.index')->with('status', 'Member berhasil ditambahkan');
     }
 
     /**
@@ -87,7 +88,7 @@ class MemberController extends Controller
             'hp'=> $request->hp
         ]);
 
-        return redirect('/member')->with('status', 'Data telah diperbarui');
+        return redirect()->route('member.index')->with('status', 'Data telah diperbarui');
     }
 
     /**
@@ -99,6 +100,6 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         Member::destroy($member->id);
-        return redirect('/member')->with('status', "Data berhasil dihapus");
+        return redirect()->route('member.index')->with('status', "Data berhasil dihapus");
     }
 }

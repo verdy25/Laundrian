@@ -73,6 +73,30 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
+                <form method="POST" action="{{route('export')}}" class="mb-3">
+                    @csrf
+                    <div class="row">
+                        <div class="col-4">
+                            <select name="bulan" id="bulan" class="form-control">
+                                <option>Bulan</option>
+                                @foreach ($bulans as $bulan)
+                                <option value="{{$bulan[0]}}">{{$bulan[1]}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <select name="tahun" id="tahun" class="form-control">
+                                <option>Tahun</option>
+                                @foreach ($tahuns as $tahun)
+                                <option value="{{$tahun}}">{{$tahun}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-primary">cetak</button>
+                        </div>
+                    </div>
+                </form>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -85,7 +109,7 @@
                     <tbody>
                         @foreach ($transaksi as $item)
                         <tr>
-                            <td>{{$item->created_at->format('d-m-Y')}}</td>
+                            <td>{{$item->created_at->format('d F Y')}}</td>
                             <td>{{$item->transaksi}}</td>
                             <td>Rp {{$item->pemasukan}}</td>
                             <td>Rp {{$item->pengeluaran}}</td>
@@ -112,4 +136,3 @@
 </div>
 <!-- /.container-fluid -->
 @endsection
-

@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::post('/', 'HomeController@export')->name('export');
 
 //member
 Route::resource('member', 'MemberController');
